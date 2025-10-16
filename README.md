@@ -82,6 +82,36 @@ pnpm prepare
 
 ---
 
+## 🏗️ Architecture
+
+### Feature-Sliced Design
+
+The project follows **Feature-Sliced Design** principles for scalability and maintainability:
+
+```
+src/
+├── app/              # Application layer: providers, routing
+├── features/         # Feature modules (independent)
+│   ├── podcasts/           # Main list view
+│   ├── podcast-detail/     # Podcast detail view
+│   └── episode-player/     # Episode player view
+├── shared/           # Shared toolkit
+│   ├── components/         # Reusable UI components
+│   ├── hooks/              # Custom React hooks
+│   ├── services/           # API and cache services
+│   ├── types/              # TypeScript types
+│   ├── utils/              # Helper functions
+│   └── constants/          # App constants
+└── styles/           # Global CSS (from scratch)
+```
+
+**Key Principles:**
+- **Layer separation**: Each layer has a single responsibility
+- **Feature independence**: Features don't import from each other
+- **Unidirectional dependencies**: Features → Shared → External libraries
+
+---
+
 ## 🚀 Available Commands
 
 ### Development
