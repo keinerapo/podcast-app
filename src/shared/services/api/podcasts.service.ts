@@ -31,7 +31,7 @@ async function fetchWithCache<TResponse, TResult>(
   const response = await fetchThroughProxy<TResponse>(url);
   const result = transformer(response);
   cacheService.set(cacheKey, result);
-  
+
   return result;
 }
 
