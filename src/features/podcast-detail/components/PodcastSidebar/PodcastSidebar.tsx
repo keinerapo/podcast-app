@@ -7,6 +7,7 @@ interface PodcastSidebarProps {
 }
 
 export function PodcastSidebar({ podcast }: PodcastSidebarProps) {
+    console.log(podcast)
   return (
     <aside className={styles.sidebar}>
       <div className={styles.imageWrapper}>

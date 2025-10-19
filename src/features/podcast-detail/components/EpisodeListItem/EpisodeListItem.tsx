@@ -10,19 +10,30 @@ interface EpisodeListItemProps {
 }
 
 export function EpisodeListItem({ episode, podcastId }: EpisodeListItemProps) {
+  const to = `/podcast/${podcastId}/episode/${episode.id}`;
+
   return (
-    <Link
-      to={`/podcast/${podcastId}/episode/${episode.id}`}
-      className={styles.item}
-      aria-label={`Play episode: ${episode.title}`}
-    >
+    <div className={styles.row}>
       <div className={styles.titleCell}>
-        <h3 className={styles.title}>{episode.title}</h3>
+        <Link
+          to={to}
+          className={styles.link}
+          aria-label={`Open episode: ${episode.title}`}
+        >
+          {episode.title}
+        </Link>
       </div>
+
       <div className={styles.dateCell}>
-        <time dateTime={episode.publishedDate}>{formatDate(episode.publishedDate)}</time>
+        <time dateTime={episode.publishedDate}>
+          {formatDate(episode.publishedDate)}
+        </time>
       </div>
-      <div className={styles.durationCell}>{formatDuration(episode.duration)}</div>
-    </Link>
+
+      <div className={styles.durationCell}>
+        {formatDuration(episode.duration)}
+      </div>
+    </div>
   );
 }
+
