@@ -1,0 +1,37 @@
+.container {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.audio {
+  width: 100%;
+  height: 40px;
+  display: block;
+  outline: none;
+}
+
+.audio::-webkit-media-controls-panel {
+  background-color: #111;
+  color: #fff;
+}
+
+.audio::-webkit-media-controls-play-button,
+.audio::-webkit-media-controls-mute-button,
+.audio::-webkit-media-controls-volume-slider,
+.audio::-webkit-media-controls-timeline {
+  filter: invert(1) brightness(1.1);
+}
+
+.audio::-webkit-media-controls-current-time-display,
+.audio::-webkit-media-controls-time-remaining-display {
+  color: #fff;
+  font-family: var(--font-family-base);
+}
+
+.audio:focus-visible {
+  outline: 2px solid #2c7be5;
+  outline-offset: 2px;
+  border-radius: 6px;
+}

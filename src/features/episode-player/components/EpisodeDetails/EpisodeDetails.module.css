@@ -1,0 +1,27 @@
+.container {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  margin: 0 0 24px 0;
+}
+
+.title {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  line-height: 1.25;
+}
+
+.description {
+  font-size: .95rem;
+  color: var(--color-gray-800);
+  line-height: 1.55;
+}
+.description p { margin: 0 0 10px 0; }
+.description a { color: #2c7be5; text-decoration: none; }
+.description a:hover, .description a:focus { text-decoration: underline; outline: none; }
+.description ul, .description ol { margin: 0 0 10px 18px; }
+.description li { margin-bottom: 6px; }
+

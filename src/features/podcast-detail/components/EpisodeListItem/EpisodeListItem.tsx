@@ -15,25 +15,16 @@ export function EpisodeListItem({ episode, podcastId }: EpisodeListItemProps) {
   return (
     <div className={styles.row}>
       <div className={styles.titleCell}>
-        <Link
-          to={to}
-          className={styles.link}
-          aria-label={`Open episode: ${episode.title}`}
-        >
+        <Link to={to} className={styles.link} aria-label={`Open episode: ${episode.title}`}>
           {episode.title}
         </Link>
       </div>
 
       <div className={styles.dateCell}>
-        <time dateTime={episode.publishedDate}>
-          {formatDate(episode.publishedDate)}
-        </time>
+        <time dateTime={episode.publishedDate}>{formatDate(episode.publishedDate)}</time>
       </div>
 
-      <div className={styles.durationCell}>
-        {formatDuration(episode.duration)}
-      </div>
+      <div className={styles.durationCell}>{formatDuration(episode.duration)}</div>
     </div>
   );
 }
-
