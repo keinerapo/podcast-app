@@ -10,6 +10,7 @@
 - [Technologies and Stack](#-technologies-and-stack)
 - [Installation and Configuration](#-installation-and-configuration)
 - [Architecture](#-architecture)
+- [Navigation & User Flow](#-navigation--user-flow)
 - [Available Commands](#-available-commands)
 - [Project Structure](#-project-structure)
 
@@ -111,6 +112,73 @@ src/
 - **Feature independence**: Features don't import from each other
 - **Unidirectional dependencies**: Features → Shared → External libraries
 
+### Technical Decisions
+
+#### CORS Proxy Strategy
+
+The iTunes API doesn't provide CORS headers, making direct browser calls impossible. The application uses **AllOrigins** as a proxy service:
+
+```typescript
+// Proxy wraps iTunes API requests
+const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(itunesUrl)}`;
+```
+
+**Benefits**:
+- ✅ Enables client-side API consumption without backend
+- ✅ Maintains SPA architecture (no server required)
+- ✅ Custom error handling with `ProxyError` class
+
+**Trade-offs**:
+- ⚠️ External service dependency (AllOrigins uptime)
+- ⚠️ Additional network hop increases latency
+- ⚠️ Rate limiting controlled by third-party
+
+#### CSS Architecture
+
+Custom CSS implementation without frameworks (Tailwind, Bootstrap, MUI):
+
+```
+styles/
+├── variables.css    # Design tokens (colors, spacing, typography)
+├── reset.css        # Browser normalization
+└── base.css         # Global styles
+
+features/
+└── */**.module.css  # Component-scoped styles
+```
+
+**Benefits**:
+- ✅ Full control over styling and bundle size
+- ✅ CSS Modules prevent style collisions
+- ✅ Design tokens ensure consistency
+- ✅ No framework-specific learning curve
+
+**Trade-offs**:
+- ⚠️ More manual CSS writing vs utility classes
+- ⚠️ Longer initial setup vs framework defaults
+
+#### Global Loading State
+
+Centralized loading management using React Context instead of external state libraries:
+
+```typescript
+// LoadingProvider wraps entire app
+<LoadingProvider>
+  <LoadingIndicator />  {/* Single global indicator */}
+  <AppRouter />
+</LoadingProvider>
+```
+
+**Benefits**:
+- ✅ No external dependencies (Redux, Zustand, etc.)
+- ✅ Simple API: `useLoading()` hook
+- ✅ Unified UX: single loading indicator in header
+- ✅ Automatic cleanup on component unmount
+
+**Trade-offs**:
+- ⚠️ Less granular control vs local loading states
+- ⚠️ Not suitable for complex multi-loading scenarios
+
 ### Cache Strategy
 
 The application implements a **Cache-Aside pattern** with LocalStorage to optimize performance and reduce API calls.
@@ -165,6 +233,59 @@ export const CACHE_CONFIG = {
   },
 };
 ```
+
+---
+
+## 🧭 Navigation & User Flow
+
+### Routing Structure
+
+```
+/ (Main)  →  /podcast/:id (Detail)  →  /podcast/:id/episode/:id (Player)
+```
+
+### Key Architectural Decisions
+
+#### 1. Component Reusability
+
+`PodcastSidebar` is shared between **Podcast Detail** and **Episode Player** pages:
+- ✅ Maintains visual consistency
+- ✅ Reduces code duplication
+- ✅ Keeps podcast context during episode playback
+
+```typescript
+// Cross-feature import (exception to FSD isolation)
+import { PodcastSidebar } from '@features/podcast-detail/components/PodcastSidebar';
+```
+
+#### 2. Data Fetching Optimization
+
+Both **Podcast Detail** and **Episode Player** use the same hook:
+
+```typescript
+// Single API call, shared data
+const { podcastDetail } = usePodcastDetail(podcastId);
+
+// Episode Player filters from existing data
+const episode = podcastDetail.episodes.find(ep => ep.id === episodeId);
+```
+
+**Benefits**:
+- No additional API call for episode details
+- Leverages 24h cache
+- Consistent data structure
+
+#### 3. Layout Consistency
+
+All pages use the same CSS Grid pattern with responsive breakpoints:
+- Desktop (>1024px): `300px sidebar + 1fr main`
+- Tablet (768-1024px): `250px sidebar + 1fr main`
+- Mobile (<768px): Stacked vertically (1fr)
+
+#### 4. Security & Internationalization
+
+- **DOMPurify**: Sanitizes HTML descriptions to prevent XSS attacks
+- **Intl API**: Native formatting for dates and durations (no external libraries)
 
 ---
 
