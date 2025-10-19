@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { MainPage } from '@features/podcasts/pages';
+import { PodcastDetailPage } from '@features/podcast-detail/pages';
 import { Header } from '@shared/components/Header';
 
 export function AppRouter() {
@@ -8,6 +9,7 @@ export function AppRouter() {
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/podcast/:podcastId" element={<PodcastDetailPage />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
