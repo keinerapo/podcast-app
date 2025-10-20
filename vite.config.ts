@@ -11,6 +11,23 @@ export default defineConfig(({ mode }) => {
       __APP_VERSION__: JSON.stringify(version),
       __BUILD_ENV__: JSON.stringify(mode),
     },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/test/setup.ts',
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'html', 'lcov'],
+        exclude: [
+          'node_modules/',
+          'src/test/',
+          '**/*.d.ts',
+          '**/*.config.*',
+          '**/mockData',
+          '**/*.test.{ts,tsx}',
+        ],
+      },
+    },
     server: {
       port: 5173,
       open: true,
