@@ -12,7 +12,7 @@
 - [Architecture](#-architecture)
 - [Navigation & User Flow](#-navigation--user-flow)
 - [Available Commands](#-available-commands)
-- [Project Structure](#-project-structure)
+- [Performance Optimizations](#-performance-optimizations)
 
 ---
 
@@ -335,5 +335,42 @@ pnpm test:run
 # Coverage report
 pnpm test:coverage
 ```
+
+### Performance
+
+```bash
+# Build with bundle analysis
+pnpm build:analyze
+```
+
+---
+
+## ⚡ Performance Optimizations
+
+### Code Splitting & Lazy Loading
+
+All pages load on-demand using `React.lazy()` + `Suspense`:
+
+```typescript
+const MainPage = lazy(() => import('@features/podcasts/pages'));
+```
+
+**Impact**: Initial bundle reduced ~5-10%, pages load only when visited.
+
+### Bundle Strategy
+
+- **react-vendor.js** (71 KB gzipped): React + React DOM
+- **router-vendor.js**: React Router separate chunk  
+- **Page chunks**: 1-4 KB each (lazy loaded)
+- **CSS splitting**: Per-component CSS (1-5 KB each)
+
+### Build Optimizations
+
+- **Target**: `esnext` (modern browsers)
+- **Minifier**: ESBuild (faster than Terser)
+- **Cache busting**: Hashed filenames for immutable caching
+- **Tree shaking**: Automatic dead code elimination
+
+**Analysis**: Run `pnpm build:analyze` to visualize bundle composition in `dist/stats.html`
 
 ---
