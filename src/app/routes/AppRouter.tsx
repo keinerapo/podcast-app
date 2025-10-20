@@ -4,17 +4,17 @@ import { Header } from '@shared/components/Header';
 import { LoadingIndicator } from '@shared/components/LoadingIndicator';
 
 const MainPage = lazy(() =>
-  import('@features/podcasts/pages').then((module) => ({ default: module.MainPage }))
+  import('@features/podcasts/pages').then((module) => ({ default: module.MainPage })),
 );
 const PodcastDetailPage = lazy(() =>
   import('@features/podcast-detail/pages').then((module) => ({
     default: module.PodcastDetailPage,
-  }))
+  })),
 );
 const EpisodePlayerPage = lazy(() =>
   import('@features/episode-player/pages').then((module) => ({
     default: module.EpisodePlayerPage,
-  }))
+  })),
 );
 
 export function AppRouter() {

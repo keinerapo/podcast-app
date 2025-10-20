@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { EpisodePlayerPage } from '../EpisodePlayerPage';
 import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
+import { usePodcastDetail } from '@features/podcast-detail/hooks';
+
+import { EpisodePlayerPage } from '../EpisodePlayerPage';
 
 vi.mock('@features/podcast-detail/hooks', () => ({
   usePodcastDetail: vi.fn(),
@@ -29,8 +31,6 @@ vi.mock('../../components', () => ({
     </div>
   ),
 }));
-
-import { usePodcastDetail } from '@features/podcast-detail/hooks';
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
 
@@ -69,7 +69,7 @@ const renderPage = (podcastId = 'podcast123', episodeId = 'ep1') => {
       <Routes>
         <Route path="/podcast/:podcastId/episode/:episodeId" element={<EpisodePlayerPage />} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter>,
   );
 };
 
@@ -173,10 +173,10 @@ describe('EpisodePlayerPage', () => {
       renderPage('podcast123', 'ep1');
 
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Episode 1: Getting Started'
+        'Episode 1: Getting Started',
       );
       expect(
-        screen.getByText('This is the first episode where we introduce the podcast.')
+        screen.getByText('This is the first episode where we introduce the podcast.'),
       ).toBeInTheDocument();
     });
 
@@ -219,7 +219,7 @@ describe('EpisodePlayerPage', () => {
       renderPage('podcast123', 'ep2');
 
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Episode 2: Advanced Topics'
+        'Episode 2: Advanced Topics',
       );
       expect(screen.getByText('We dive deeper into advanced topics.')).toBeInTheDocument();
 
@@ -251,7 +251,7 @@ describe('EpisodePlayerPage', () => {
       renderPage('podcast123', 'ep2');
 
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Episode 2: Advanced Topics'
+        'Episode 2: Advanced Topics',
       );
     });
   });

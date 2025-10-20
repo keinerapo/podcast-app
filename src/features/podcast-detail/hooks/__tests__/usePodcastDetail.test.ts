@@ -1,8 +1,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { usePodcastDetail } from '../usePodcastDetail';
 import * as apiService from '@shared/services/api';
 import type { PodcastDetail } from '@shared/types/podcast.types';
+
+import { usePodcastDetail } from '../usePodcastDetail';
+
+type ResolveFunction = (_value: PodcastDetail) => void;
 
 vi.mock('@shared/services/api', () => ({
   getPodcastDetail: vi.fn(),
@@ -110,10 +113,9 @@ describe('usePodcastDetail', () => {
   it('should refetch when podcastId changes', async () => {
     vi.mocked(apiService.getPodcastDetail).mockResolvedValue(mockPodcastDetail);
 
-    const { rerender } = renderHook(
-      ({ id }) => usePodcastDetail(id),
-      { initialProps: { id: '123' } }
-    );
+    const { rerender } = renderHook(({ id }) => usePodcastDetail(id), {
+      initialProps: { id: '123' },
+    });
 
     await waitFor(() => {
       expect(apiService.getPodcastDetail).toHaveBeenCalledWith('123');
@@ -131,7 +133,7 @@ describe('usePodcastDetail', () => {
   });
 
   it('should cancel fetch if component unmounts', async () => {
-    let resolvePromise: (value: PodcastDetail) => void;
+    let resolvePromise!: ResolveFunction;
     const pendingPromise = new Promise<PodcastDetail>((resolve) => {
       resolvePromise = resolve;
     });
@@ -144,7 +146,7 @@ describe('usePodcastDetail', () => {
 
     unmount();
 
-    resolvePromise!(mockPodcastDetail);
+    resolvePromise(mockPodcastDetail);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 
@@ -152,23 +154,22 @@ describe('usePodcastDetail', () => {
   });
 
   it('should not update state if cancelled during fetch', async () => {
-    let resolvePromise: (value: PodcastDetail) => void;
+    let resolvePromise!: ResolveFunction;
     const pendingPromise = new Promise<PodcastDetail>((resolve) => {
       resolvePromise = resolve;
     });
 
     vi.mocked(apiService.getPodcastDetail).mockReturnValue(pendingPromise);
 
-    const { result, rerender } = renderHook(
-      ({ id }) => usePodcastDetail(id),
-      { initialProps: { id: '123' } }
-    );
+    const { result, rerender } = renderHook(({ id }) => usePodcastDetail(id), {
+      initialProps: { id: '123' },
+    });
 
     expect(result.current.isLoading).toBe(true);
 
     rerender({ id: '456' });
 
-    resolvePromise!(mockPodcastDetail);
+    resolvePromise(mockPodcastDetail);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 
@@ -176,7 +177,8 @@ describe('usePodcastDetail', () => {
   });
 
   it('should handle error without updating if cancelled', async () => {
-    let rejectPromise: (error: Error) => void;
+    type RejectFunction = (_error: Error) => void;
+    let rejectPromise!: RejectFunction;
     const pendingPromise = new Promise<PodcastDetail>((_, reject) => {
       rejectPromise = reject;
     });
@@ -189,7 +191,7 @@ describe('usePodcastDetail', () => {
 
     unmount();
 
-    rejectPromise!(new Error('Test error'));
+    rejectPromise(new Error('Test error'));
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 
@@ -222,7 +224,7 @@ describe('usePodcastDetail', () => {
   });
 
   it('should maintain loading state throughout fetch', async () => {
-    let resolvePromise: (value: PodcastDetail) => void;
+    let resolvePromise!: ResolveFunction;
     const pendingPromise = new Promise<PodcastDetail>((resolve) => {
       resolvePromise = resolve;
     });
@@ -234,7 +236,7 @@ describe('usePodcastDetail', () => {
     expect(result.current.isLoading).toBe(true);
     expect(mockSetGlobalLoading).toHaveBeenCalledWith(true);
 
-    resolvePromise!(mockPodcastDetail);
+    resolvePromise(mockPodcastDetail);
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);

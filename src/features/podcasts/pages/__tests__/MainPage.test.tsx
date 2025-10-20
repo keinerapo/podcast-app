@@ -2,8 +2,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { MainPage } from '../MainPage';
+import type { ReactElement } from 'react';
 import type { Podcast } from '@shared/types/podcast.types';
+import { usePodcasts } from '@features/podcasts/hooks';
+
+import { MainPage } from '../MainPage';
 
 vi.mock('@features/podcasts/hooks', () => ({
   usePodcasts: vi.fn(),
@@ -33,7 +36,7 @@ vi.mock('@features/podcasts/components/SearchFilter', () => ({
     totalCount,
   }: {
     searchQuery: string;
-    onSearchChange: (query: string) => void;
+    onSearchChange: (_query: string) => void;
     resultsCount: number;
     totalCount: number;
   }) => (
@@ -51,8 +54,6 @@ vi.mock('@features/podcasts/components/SearchFilter', () => ({
     </div>
   ),
 }));
-
-import { usePodcasts } from '@features/podcasts/hooks';
 
 const mockUsePodcasts = usePodcasts as ReturnType<typeof vi.fn>;
 
@@ -80,7 +81,7 @@ const mockPodcasts: Podcast[] = [
   },
 ];
 
-const renderWithRouter = (component: React.ReactElement) => {
+const renderWithRouter = (component: ReactElement) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 
@@ -270,9 +271,9 @@ describe('MainPage', () => {
       renderWithRouter(<MainPage />);
 
       const searchInput = screen.getByTestId('search-input');
-      
+
       await user.type(searchInput, 'joe');
-      
+
       await waitFor(() => {
         expect(screen.getByTestId('results-count')).toHaveTextContent('1 / 3');
       });

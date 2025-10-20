@@ -1,10 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import { PodcastCard } from '../PodcastCard';
+import type { ReactElement } from 'react';
 import type { Podcast } from '@shared/types/podcast.types';
 
-const renderWithRouter = (component: React.ReactElement) => {
+import { PodcastCard } from '../PodcastCard';
+
+const renderWithRouter = (component: ReactElement) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 

@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
 import { useLocalStorage } from '../useLocalStorage';
 
 describe('useLocalStorage', () => {
@@ -17,7 +18,7 @@ describe('useLocalStorage', () => {
 
   it('should return initial value when localStorage is empty', () => {
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, INITIAL_VALUE));
-    
+
     expect(result.current[0]).toBe(INITIAL_VALUE);
   });
 
@@ -26,7 +27,7 @@ describe('useLocalStorage', () => {
     localStorage.setItem(TEST_KEY, JSON.stringify(storedValue));
 
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, INITIAL_VALUE));
-    
+
     expect(result.current[0]).toBe(storedValue);
   });
 
@@ -63,7 +64,7 @@ describe('useLocalStorage', () => {
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, initialObject));
 
     const newObject: TestObject = { name: 'Jane', age: 25 };
-    
+
     act(() => {
       result.current[1](newObject);
     });
@@ -77,7 +78,7 @@ describe('useLocalStorage', () => {
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, INITIAL_VALUE));
-    
+
     expect(result.current[0]).toBe(INITIAL_VALUE);
     expect(consoleErrorSpy).toHaveBeenCalled();
 
@@ -152,9 +153,9 @@ describe('useLocalStorage', () => {
 
   it('should cleanup event listener on unmount', () => {
     const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
-    
+
     const { unmount } = renderHook(() => useLocalStorage(TEST_KEY, INITIAL_VALUE));
-    
+
     unmount();
 
     expect(removeEventListenerSpy).toHaveBeenCalledWith('storage', expect.any(Function));

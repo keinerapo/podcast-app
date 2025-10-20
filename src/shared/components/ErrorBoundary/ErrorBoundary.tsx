@@ -25,24 +25,18 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): Partial<State> {
-    // Update state so the next render will show the fallback UI
     return { hasError: true, error };
   }
 
   override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
       console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
 
-    // Update state with error details
     this.setState({
       error,
       errorInfo,
     });
-
-    // TODO: Log to external error tracking service (Sentry, LogRocket, etc.)
-    // logErrorToService(error, errorInfo);
   }
 
   handleReset = (): void => {
@@ -55,12 +49,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
   override render(): ReactNode {
     if (this.state.hasError) {
-      // Custom fallback UI if provided
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
-      // Default error UI
       return (
         <div className={styles.errorBoundary}>
           <div className={styles.container}>
@@ -70,7 +62,7 @@ export class ErrorBoundary extends Component<Props, State> {
               We're sorry for the inconvenience. The application encountered an unexpected error.
             </p>
 
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {import.meta.env.MODE === 'development' && this.state.error && (
               <details className={styles.details}>
                 <summary className={styles.summary}>Error Details (Development Only)</summary>
                 <div className={styles.errorInfo}>

@@ -1,18 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import { PodcastList } from '../PodcastList';
+import type { ReactElement } from 'react';
 import type { Podcast } from '@shared/types/podcast.types';
+
+import { PodcastList } from '../PodcastList';
 
 vi.mock('@features/podcasts/components/PodcastCard', () => ({
   PodcastCard: ({ podcast }: { podcast: Podcast }) => (
-    <div data-testid={`podcast-card-${podcast.id}`}>
-      {podcast.name}
-    </div>
+    <div data-testid={`podcast-card-${podcast.id}`}>{podcast.name}</div>
   ),
 }));
 
-const renderWithRouter = (component: React.ReactElement) => {
+const renderWithRouter = (component: ReactElement) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 
@@ -82,7 +82,7 @@ describe('PodcastList', () => {
   });
 
   it('should use podcast id as key for list items', () => {
-    const { container } = renderWithRouter(<PodcastList podcasts={mockPodcasts} />);
+    renderWithRouter(<PodcastList podcasts={mockPodcasts} />);
 
     mockPodcasts.forEach((podcast) => {
       expect(screen.getByTestId(`podcast-card-${podcast.id}`)).toBeInTheDocument();
@@ -108,7 +108,7 @@ describe('PodcastList', () => {
     renderWithRouter(<PodcastList podcasts={mockPodcasts} />);
 
     const cards = screen.getAllByTestId(/podcast-card-/);
-    
+
     cards.forEach((card, index) => {
       expect(card).toHaveAttribute('data-testid', `podcast-card-${mockPodcasts[index]!.id}`);
     });
@@ -123,7 +123,7 @@ describe('PodcastList', () => {
     rerender(
       <BrowserRouter>
         <PodcastList podcasts={newPodcasts} />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.getAllByTestId(/podcast-card-/)).toHaveLength(1);
@@ -137,7 +137,7 @@ describe('PodcastList', () => {
     rerender(
       <BrowserRouter>
         <PodcastList podcasts={mockPodcasts} />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.queryByText(/no podcasts found/i)).not.toBeInTheDocument();

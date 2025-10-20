@@ -1,13 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
+import type { ReactElement } from 'react';
+
 import { Header } from '../Header';
 
 vi.mock('@shared/components/LoadingIndicator', () => ({
   LoadingIndicator: () => <div data-testid="loading-indicator">Loading...</div>,
 }));
 
-const renderWithRouter = (component: React.ReactElement) => {
+const renderWithRouter = (component: ReactElement) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 

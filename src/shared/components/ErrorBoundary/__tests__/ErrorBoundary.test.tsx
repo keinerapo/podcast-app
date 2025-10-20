@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { ErrorBoundary } from '../ErrorBoundary';
@@ -152,14 +152,14 @@ describe('ErrorBoundary', () => {
   });
 
   describe('Development mode', () => {
-    const originalNodeEnv = process.env.NODE_ENV;
+    const originalMode = import.meta.env.MODE;
 
     beforeEach(() => {
-      process.env.NODE_ENV = 'development';
+      import.meta.env.MODE = 'development';
     });
 
     afterEach(() => {
-      process.env.NODE_ENV = originalNodeEnv;
+      import.meta.env.MODE = originalMode;
     });
 
     it('should show error details in development mode', () => {
@@ -185,14 +185,14 @@ describe('ErrorBoundary', () => {
   });
 
   describe('Production mode', () => {
-    const originalNodeEnv = process.env.NODE_ENV;
+    const originalMode = import.meta.env.MODE;
 
     beforeEach(() => {
-      process.env.NODE_ENV = 'production';
+      import.meta.env.MODE = 'production';
     });
 
     afterEach(() => {
-      process.env.NODE_ENV = originalNodeEnv;
+      import.meta.env.MODE = originalMode;
     });
 
     it('should not show error details in production mode', () => {

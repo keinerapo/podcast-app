@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { PodcastDetailPage } from '../PodcastDetailPage';
 import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
+
+import { PodcastDetailPage } from '../PodcastDetailPage';
+import { usePodcastDetail } from '../../hooks';
 
 vi.mock('../../hooks', () => ({
   usePodcastDetail: vi.fn(),
@@ -28,8 +30,6 @@ vi.mock('../../components/EpisodeList', () => ({
     </div>
   ),
 }));
-
-import { usePodcastDetail } from '../../hooks';
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
 
@@ -68,7 +68,7 @@ const renderPage = (podcastId = 'podcast123') => {
       <Routes>
         <Route path="/podcast/:podcastId" element={<PodcastDetailPage />} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter>,
   );
 };
 
@@ -233,7 +233,7 @@ describe('PodcastDetailPage', () => {
 
       expect(screen.getByTestId('podcast-sidebar')).toBeInTheDocument();
       expect(screen.getByTestId('episode-list')).toBeInTheDocument();
-      
+
       const episodeList = screen.getByTestId('episode-list');
       expect(episodeList.children.length).toBe(0);
     });
