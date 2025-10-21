@@ -2,6 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import * as apiService from '@shared/services/api';
 import type { PodcastDetail } from '@shared/types/podcast.types';
+import { mockPodcastDetail, createMockPodcastDetail } from '@test/fixtures';
 
 import { usePodcastDetail } from '../usePodcastDetail';
 
@@ -20,33 +21,6 @@ vi.mock('@app/providers', () => ({
 }));
 
 describe('usePodcastDetail', () => {
-  const mockPodcastDetail: PodcastDetail = {
-    id: '123',
-    name: 'Test Podcast',
-    author: 'Test Author',
-    image: 'https://example.com/image.jpg',
-    summary: 'Test summary',
-    genre: 'Technology',
-    episodes: [
-      {
-        id: 'ep1',
-        title: 'Episode 1',
-        description: 'Description 1',
-        publishedDate: '2024-01-01',
-        duration: 3600000,
-        audioUrl: 'https://example.com/audio1.mp3',
-      },
-      {
-        id: 'ep2',
-        title: 'Episode 2',
-        description: 'Description 2',
-        publishedDate: '2024-01-02',
-        duration: 2400000,
-        audioUrl: 'https://example.com/audio2.mp3',
-      },
-    ],
-  };
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -121,7 +95,7 @@ describe('usePodcastDetail', () => {
       expect(apiService.getPodcastDetail).toHaveBeenCalledWith('123');
     });
 
-    const newMockDetail = { ...mockPodcastDetail, id: '456', name: 'Different Podcast' };
+    const newMockDetail = createMockPodcastDetail({ id: '456', name: 'Different Podcast' });
     vi.mocked(apiService.getPodcastDetail).mockResolvedValue(newMockDetail);
 
     rerender({ id: '456' });

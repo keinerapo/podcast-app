@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
 import { usePodcastDetail } from '@features/podcast-detail/hooks';
+import { mockPodcastDetail, mockEpisodes } from '@test/fixtures';
 
 import { EpisodePlayerPage } from '../EpisodePlayerPage';
 
@@ -33,34 +34,6 @@ vi.mock('../../components', () => ({
 }));
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
-
-const mockEpisodes: Episode[] = [
-  {
-    id: 'ep1',
-    title: 'Episode 1: Getting Started',
-    description: 'This is the first episode where we introduce the podcast.',
-    duration: 3600000,
-    publishedDate: '2024-01-01',
-    audioUrl: 'https://example.com/audio/ep1.mp3',
-  },
-  {
-    id: 'ep2',
-    title: 'Episode 2: Advanced Topics',
-    description: 'We dive deeper into advanced topics.',
-    duration: 4200000,
-    publishedDate: '2024-01-08',
-    audioUrl: 'https://example.com/audio/ep2.mp3',
-  },
-];
-
-const mockPodcastDetail: PodcastDetail = {
-  id: 'podcast123',
-  name: 'Test Podcast',
-  author: 'Test Author',
-  image: 'https://example.com/podcast.jpg',
-  summary: 'A great test podcast',
-  episodes: mockEpisodes,
-};
 
 const renderPage = (podcastId = 'podcast123', episodeId = 'ep1') => {
   window.history.pushState({}, '', `/podcast/${podcastId}/episode/${episodeId}`);

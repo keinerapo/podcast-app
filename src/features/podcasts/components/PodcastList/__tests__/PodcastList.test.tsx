@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import type { Podcast } from '@shared/types/podcast.types';
-import { renderWithRouter } from '@test/utils';
+import { renderWithRouter, mockPodcasts } from '@test/utils';
 
 import { PodcastList } from '../PodcastList';
 
@@ -12,30 +12,6 @@ vi.mock('@features/podcasts/components/PodcastCard', () => ({
 }));
 
 describe('PodcastList', () => {
-  const mockPodcasts: Podcast[] = [
-    {
-      id: '1',
-      name: 'Podcast 1',
-      author: 'Author 1',
-      image: 'https://example.com/image1.jpg',
-      summary: 'Summary 1',
-    },
-    {
-      id: '2',
-      name: 'Podcast 2',
-      author: 'Author 2',
-      image: 'https://example.com/image2.jpg',
-      summary: 'Summary 2',
-    },
-    {
-      id: '3',
-      name: 'Podcast 3',
-      author: 'Author 3',
-      image: 'https://example.com/image3.jpg',
-      summary: 'Summary 3',
-    },
-  ];
-
   it('should render all podcasts in the list', () => {
     renderWithRouter(<PodcastList podcasts={mockPodcasts} />);
 

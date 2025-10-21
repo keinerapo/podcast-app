@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
+import { mockPodcastDetail } from '@test/fixtures';
 
 import { PodcastDetailPage } from '../PodcastDetailPage';
 import { usePodcastDetail } from '../../hooks';
@@ -32,34 +33,6 @@ vi.mock('../../components/EpisodeList', () => ({
 }));
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
-
-const mockEpisodes: Episode[] = [
-  {
-    id: 'ep1',
-    title: 'Episode 1: Introduction',
-    description: 'First episode',
-    duration: 3600000,
-    publishedDate: '2024-01-01',
-    audioUrl: 'https://example.com/ep1.mp3',
-  },
-  {
-    id: 'ep2',
-    title: 'Episode 2: Deep Dive',
-    description: 'Second episode',
-    duration: 4200000,
-    publishedDate: '2024-01-08',
-    audioUrl: 'https://example.com/ep2.mp3',
-  },
-];
-
-const mockPodcastDetail: PodcastDetail = {
-  id: 'podcast123',
-  name: 'Test Podcast',
-  author: 'Test Author',
-  image: 'https://example.com/podcast.jpg',
-  summary: 'A great test podcast',
-  episodes: mockEpisodes,
-};
 
 const renderPage = (podcastId = 'podcast123') => {
   window.history.pushState({}, '', `/podcast/${podcastId}`);
@@ -185,8 +158,8 @@ describe('PodcastDetailPage', () => {
 
       renderPage();
 
-      expect(screen.getByTestId('episode-ep1')).toHaveTextContent('Episode 1: Introduction');
-      expect(screen.getByTestId('episode-ep2')).toHaveTextContent('Episode 2: Deep Dive');
+      expect(screen.getByTestId('episode-ep1')).toHaveTextContent('Episode 1: Getting Started');
+      expect(screen.getByTestId('episode-ep2')).toHaveTextContent('Episode 2: Advanced Topics');
     });
 
     it('should pass podcastId to episode list', () => {

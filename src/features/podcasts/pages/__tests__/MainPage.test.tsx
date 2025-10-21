@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { Podcast } from '@shared/types/podcast.types';
 import { usePodcasts } from '@features/podcasts/hooks';
-import { renderWithRouter } from '@test/utils';
+import { renderWithRouter, mockPodcasts } from '@test/utils';
 
 import { MainPage } from '../MainPage';
 
@@ -55,30 +55,6 @@ vi.mock('@features/podcasts/components/SearchFilter', () => ({
 }));
 
 const mockUsePodcasts = usePodcasts as ReturnType<typeof vi.fn>;
-
-const mockPodcasts: Podcast[] = [
-  {
-    id: '1',
-    name: 'The Joe Rogan Experience',
-    author: 'Joe Rogan',
-    image: 'https://example.com/joe.jpg',
-    summary: 'Long form conversations',
-  },
-  {
-    id: '2',
-    name: 'Crime Junkie',
-    author: 'audiochuck',
-    image: 'https://example.com/crime.jpg',
-    summary: 'True crime podcast',
-  },
-  {
-    id: '3',
-    name: 'The Daily',
-    author: 'The New York Times',
-    image: 'https://example.com/daily.jpg',
-    summary: 'News podcast',
-  },
-];
 
 describe('MainPage', () => {
   beforeEach(() => {
