@@ -13,6 +13,8 @@
 - [Navigation & User Flow](#-navigation--user-flow)
 - [Available Commands](#-available-commands)
 - [Performance Optimizations](#-performance-optimizations)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
 
 ---
 
@@ -372,5 +374,114 @@ const MainPage = lazy(() => import('@features/podcasts/pages'));
 - **Tree shaking**: Automatic dead code elimination
 
 **Analysis**: Run `pnpm build:analyze` to visualize bundle composition in `dist/stats.html`
+
+---
+
+## 🧪 Testing
+
+### Test Coverage
+
+- **154 tests** across 14 test suites
+- **Unit tests**: Hooks, components, pages
+- **Integration tests**: User flows and interactions
+- **Coverage**: 100% pass rate
+
+### Testing Strategy
+
+```typescript
+// Custom hooks (useDebounce, useLocalStorage, usePodcasts, usePodcastDetail)
+describe('usePodcasts', () => {
+  it('should fetch and cache podcasts', async () => {
+    // Test caching, loading states, error handling
+  });
+});
+
+// Components with user interactions
+describe('SearchFilter', () => {
+  it('should debounce search input', async () => {
+    // Test real user behavior with waitFor
+  });
+});
+
+// Pages with routing context
+describe('MainPage', () => {
+  it('should render podcast list and filter', () => {
+    // Test using custom renderWithRouter utility
+  });
+});
+```
+
+### Testing Tools
+
+- **Vitest**: Fast test runner with hot reload
+- **Testing Library**: User-centric testing (no implementation details)
+- **Custom utilities**: `renderWithRouter` for routing tests
+- **Centralized fixtures**: Reusable mock data in `test/fixtures`
+
+---
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+# 1. Build the application
+pnpm build
+
+# Output: dist/ folder with optimized assets
+```
+
+### Static Hosting Options
+
+The app is a **pure SPA** (no backend required). Deploy to any static host:
+
+#### Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+pnpm add -g vercel
+
+# Deploy
+vercel --prod
+```
+
+#### Netlify
+
+```bash
+# Create netlify.toml
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
+
+#### GitHub Pages
+
+```bash
+# Update vite.config.ts with your repository name
+export default defineConfig({
+  base: '/your-repo-name/', // Replace with your GitHub repo name
+});
+
+# Build and deploy
+pnpm build
+# Push dist/ to gh-pages branch
+```
+
+### Environment Variables
+
+No environment variables required. API endpoints are hardcoded:
+- iTunes API: `https://itunes.apple.com`
+- CORS Proxy: `https://api.allorigins.win`
+
+### Browser Compatibility
+
+- **Modern browsers** (Chrome, Firefox, Safari, Edge)
+- **ES2020+ support** required
+- **No IE11 support** (uses native Intl API)
 
 ---
