@@ -461,15 +461,38 @@ vercel --prod
 
 #### GitHub Pages
 
-```bash
-# Update vite.config.ts with your repository name
-export default defineConfig({
-  base: '/your-repo-name/', // Replace with your GitHub repo name
-});
+**Automatic Deployment (Recommended)**
 
-# Build and deploy
-pnpm build
-# Push dist/ to gh-pages branch
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+1. **Enable GitHub Pages**:
+   - Go to your repository → Settings → Pages
+   - Source: GitHub Actions
+
+2. **Push to main branch**:
+   ```bash
+   git push origin main
+   ```
+
+3. **Access your app**:
+   - URL: `https://keinerapo.github.io/podcast-app/`
+   - GitHub Actions will automatically build and deploy
+
+**Manual Deployment**
+
+If you fork this repo and want to deploy to your own GitHub Pages:
+
+```bash
+# 1. Update vite.config.ts base path
+# Change: base: mode === 'production' ? '/podcast-app/' : '/',
+# To:     base: mode === 'production' ? '/your-repo-name/' : '/',
+
+# 2. Update .github/workflows/deploy.yml if needed
+
+# 3. Enable GitHub Pages in your repo settings
+
+# 4. Push to main
+git push origin main
 ```
 
 ### Environment Variables

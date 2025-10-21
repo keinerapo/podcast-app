@@ -7,6 +7,7 @@ const { version } = JSON.parse(readFileSync(new URL('./package.json', import.met
 
 export default defineConfig(({ mode }) => {
   return {
+    base: mode === 'production' ? '/podcast-app/' : '/',
     plugins: [
       react(),
       mode === 'production' &&
