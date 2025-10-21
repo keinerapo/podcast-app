@@ -8,8 +8,15 @@ import styles from './PodcastDetailPage.module.css';
 
 export function PodcastDetailPage() {
   const { podcastId } = useParams<{ podcastId: string }>();
-
   const { podcastDetail, error, isLoading } = usePodcastDetail(podcastId || '');
+
+  if (!podcastId) {
+    return (
+      <div className="container">
+        <ErrorMessage message="Podcast ID is required" />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -27,7 +34,7 @@ export function PodcastDetailPage() {
     <div className="container">
       <div className={styles.layout}>
         <PodcastSidebar podcast={podcastDetail} />
-        <EpisodeList episodes={podcastDetail.episodes} podcastId={podcastId || ''} />
+        <EpisodeList episodes={podcastDetail.episodes} podcastId={podcastId} />
       </div>
     </div>
   );

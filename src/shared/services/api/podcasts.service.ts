@@ -40,7 +40,7 @@ async function fetchWithCache<TResponse, TResult>(
  * @param {ITunesTopPodcastsResponse} response - The raw API response object containing the feed data.
  * @returns {Podcast[]} An array of simplified Podcast objects.
  */
-function transformTopPodcasts(response: ITunesTopPodcastsResponse): Podcast[] {
+export function transformTopPodcasts(response: ITunesTopPodcastsResponse): Podcast[] {
   return response.feed.entry.map((entry) => {
     const images = entry['im:image'];
     const highQualityImage = images[images.length - 1]?.label || images[0]?.label || '';
@@ -62,7 +62,7 @@ function transformTopPodcasts(response: ITunesTopPodcastsResponse): Podcast[] {
  * @returns {PodcastDetail} A detailed object containing the podcast information and a list of its episodes.
  * @throws {Error} If no podcast information is found in the response results.
  */
-function transformPodcastDetail(
+export function transformPodcastDetail(
   response: ITunesPodcastLookupResponse,
   podcastId: string,
 ): PodcastDetail {

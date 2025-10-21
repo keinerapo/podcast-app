@@ -1,2 +1,7 @@
 export { fetchThroughProxy, ProxyError } from './allOrigins.proxy';
-export { getTopPodcasts, getPodcastDetail } from './podcasts.service';
+export {
+  getTopPodcasts,
+  getPodcastDetail,
+  transformTopPodcasts,
+  transformPodcastDetail,
+} from './podcasts.service';

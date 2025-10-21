@@ -62,7 +62,7 @@ describe('EpisodePlayerPage', () => {
 
       renderPage();
 
-      expect(screen.getByText(`Error al cargar el episodio: ${errorMessage}`)).toBeInTheDocument();
+      expect(screen.getByText(`Error loading episode: ${errorMessage}`)).toBeInTheDocument();
     });
 
     it('should not render components when there is an error', () => {
@@ -104,7 +104,7 @@ describe('EpisodePlayerPage', () => {
 
       renderPage('podcast123', 'nonexistent-episode');
 
-      expect(screen.getByText('Episodio no encontrado')).toBeInTheDocument();
+      expect(screen.getByText('Episode not found')).toBeInTheDocument();
     });
 
     it('should not render player when episode is not found', () => {
