@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { ErrorMessage } from '@shared/components/ErrorMessage';
 
 import { usePodcastDetail } from '../hooks';
 import { PodcastSidebar } from '../components/PodcastSidebar';
@@ -13,19 +14,7 @@ export function PodcastDetailPage() {
   if (error) {
     return (
       <div className="container">
-        <div
-          style={{
-            padding: '2rem',
-            textAlign: 'center',
-            color: 'var(--color-error)',
-            backgroundColor: 'var(--color-gray-50)',
-            borderRadius: 'var(--radius-md)',
-            margin: '2rem 0',
-          }}
-        >
-          <h2>Error loading podcast</h2>
-          <p>{error}</p>
-        </div>
+        <ErrorMessage message={`Error loading podcast: ${error}`} />
       </div>
     );
   }

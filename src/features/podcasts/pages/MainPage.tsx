@@ -3,6 +3,7 @@ import { PodcastList } from '@features/podcasts/components/PodcastList';
 import { SearchFilter } from '@features/podcasts/components/SearchFilter';
 import { usePodcasts } from '@features/podcasts/hooks';
 import { useDebounce } from '@shared/hooks';
+import { ErrorMessage } from '@shared/components/ErrorMessage';
 
 export const MainPage = () => {
   const { podcasts, error, isLoading } = usePodcasts();
@@ -24,23 +25,7 @@ export const MainPage = () => {
   return (
     <div className="container">
       <main>
-        {error && (
-          <div
-            role="alert"
-            style={{
-              padding: 'var(--spacing-md)',
-              marginTop: 'var(--spacing-md)',
-              backgroundColor: 'var(--color-error-light)',
-              color: 'var(--color-error)',
-              borderRadius: 'var(--radius-md)',
-              textAlign: 'center',
-            }}
-          >
-            <p style={{ margin: 0 }}>
-              <strong>Error:</strong> {error}
-            </p>
-          </div>
-        )}
+        {error && <ErrorMessage message={error} />}
 
         {!error && !isLoading && (
           <>

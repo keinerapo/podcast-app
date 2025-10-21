@@ -87,8 +87,10 @@ describe('PodcastDetailPage', () => {
 
       renderPage();
 
-      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Error loading podcast');
-      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      const alert = screen.getByRole('alert');
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent('Error loading podcast');
+      expect(alert).toHaveTextContent(errorMessage);
     });
 
     it('should not render sidebar or episode list when there is an error', () => {
@@ -113,11 +115,9 @@ describe('PodcastDetailPage', () => {
 
       renderPage();
 
-      const errorContainer = screen.getByRole('heading', { level: 2 }).parentElement;
-      expect(errorContainer).toHaveStyle({
-        padding: '2rem',
-        textAlign: 'center',
-      });
+      const errorAlert = screen.getByRole('alert');
+      expect(errorAlert).toBeInTheDocument();
+      expect(errorAlert).toHaveTextContent('Error loading podcast: Error');
     });
   });
 

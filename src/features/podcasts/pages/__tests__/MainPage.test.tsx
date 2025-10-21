@@ -90,7 +90,6 @@ describe('MainPage', () => {
 
       const alert = screen.getByRole('alert');
       expect(alert).toBeInTheDocument();
-      expect(alert).toHaveTextContent('Error:');
       expect(alert).toHaveTextContent(errorMessage);
     });
 

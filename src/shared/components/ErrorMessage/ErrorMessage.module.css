@@ -1,0 +1,15 @@
+.container {
+  padding: var(--spacing-lg);
+  text-align: center;
+  background-color: var(--color-error-light, #fee);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  margin: var(--spacing-md) 0;
+}
+
+.message {
+  color: var(--color-error);
+  font-size: var(--font-size-md);
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
