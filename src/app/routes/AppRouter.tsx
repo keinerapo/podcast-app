@@ -19,7 +19,7 @@ const EpisodePlayerPage = lazy(() =>
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/podcast-app">
       <Header />
       <Suspense fallback={<LoadingIndicator />}>
         <Routes>
