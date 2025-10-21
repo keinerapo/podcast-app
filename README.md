@@ -68,7 +68,7 @@
 ### Prerequisites
 
 - **Node.js**: ≥ 18.x
-- **pnpm**: ≥ 8.x (required package manager)
+- **pnpm**: ≥ 10.x (required package manager)
 
 ### Installation
 
