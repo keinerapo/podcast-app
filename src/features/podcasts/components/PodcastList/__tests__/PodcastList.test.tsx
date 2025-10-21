@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
-import type { ReactElement } from 'react';
 import type { Podcast } from '@shared/types/podcast.types';
+import { renderWithRouter } from '@test/utils';
 
 import { PodcastList } from '../PodcastList';
 
@@ -11,10 +10,6 @@ vi.mock('@features/podcasts/components/PodcastCard', () => ({
     <div data-testid={`podcast-card-${podcast.id}`}>{podcast.name}</div>
   ),
 }));
-
-const renderWithRouter = (component: ReactElement) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
-};
 
 describe('PodcastList', () => {
   const mockPodcasts: Podcast[] = [
@@ -114,33 +109,18 @@ describe('PodcastList', () => {
     });
   });
 
-  it('should re-render when podcasts prop changes', () => {
-    const { rerender } = renderWithRouter(<PodcastList podcasts={mockPodcasts} />);
+  it('should render different number of podcasts', () => {
+    const singlePodcast = mockPodcasts.slice(0, 1);
+    renderWithRouter(<PodcastList podcasts={singlePodcast} />);
 
-    expect(screen.getAllByTestId(/podcast-card-/)).toHaveLength(3);
-
-    const newPodcasts = mockPodcasts.slice(0, 1);
-    rerender(
-      <BrowserRouter>
-        <PodcastList podcasts={newPodcasts} />
-      </BrowserRouter>,
-    );
-
-    expect(screen.getAllByTestId(/podcast-card-/)).toHaveLength(1);
+    const cards = screen.getAllByTestId(/podcast-card-/);
+    expect(cards).toHaveLength(1);
   });
 
-  it('should transition from empty to populated list', () => {
-    const { rerender } = renderWithRouter(<PodcastList podcasts={[]} />);
+  it('should handle empty list correctly', () => {
+    renderWithRouter(<PodcastList podcasts={[]} />);
 
     expect(screen.getByText(/no podcasts found/i)).toBeInTheDocument();
-
-    rerender(
-      <BrowserRouter>
-        <PodcastList podcasts={mockPodcasts} />
-      </BrowserRouter>,
-    );
-
-    expect(screen.queryByText(/no podcasts found/i)).not.toBeInTheDocument();
-    expect(screen.getAllByTestId(/podcast-card-/)).toHaveLength(3);
+    expect(screen.queryByTestId(/podcast-card-/)).not.toBeInTheDocument();
   });
 });

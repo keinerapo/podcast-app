@@ -78,6 +78,7 @@ export default defineConfig(({ mode }) => {
         '@features': '/src/features',
         '@shared': '/src/shared',
         '@styles': '/src/styles',
+        '@test': '/src/test',
       },
     },
   };

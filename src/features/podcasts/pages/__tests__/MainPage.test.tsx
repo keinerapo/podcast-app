@@ -1,10 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import type { ReactElement } from 'react';
 import type { Podcast } from '@shared/types/podcast.types';
 import { usePodcasts } from '@features/podcasts/hooks';
+import { renderWithRouter } from '@test/utils';
 
 import { MainPage } from '../MainPage';
 
@@ -80,10 +79,6 @@ const mockPodcasts: Podcast[] = [
     summary: 'News podcast',
   },
 ];
-
-const renderWithRouter = (component: ReactElement) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
-};
 
 describe('MainPage', () => {
   beforeEach(() => {
