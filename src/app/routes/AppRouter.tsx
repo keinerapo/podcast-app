@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { Header } from '@shared/components/Header';
+import { AppHeader } from '@app/ui';
 import { LoadingIndicator } from '@shared/components/LoadingIndicator';
 
 const MainPage = lazy(() =>
@@ -20,7 +20,7 @@ const EpisodePlayerPage = lazy(() =>
 export function AppRouter() {
   return (
     <BrowserRouter basename="/podcast-app">
-      <Header />
+      <AppHeader />
       <Suspense fallback={<LoadingIndicator />}>
         <Routes>
           <Route path="/" element={<MainPage />} />

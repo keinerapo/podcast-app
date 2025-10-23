@@ -1,0 +1,21 @@
+.logoLink {
+  text-decoration: none;
+  color: #1976d2;
+  transition: color 0.2s ease;
+}
+
+.logoLink:hover {
+  color: #1565c0;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
