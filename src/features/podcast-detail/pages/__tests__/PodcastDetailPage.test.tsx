@@ -5,10 +5,11 @@ import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
 import { mockPodcastDetail } from '@test/fixtures';
 
 import { PodcastDetailPage } from '../PodcastDetailPage';
-import { usePodcastDetail } from '../../hooks';
+import { usePodcastDetail, usePodcastWithSummary } from '../../hooks';
 
 vi.mock('../../hooks', () => ({
   usePodcastDetail: vi.fn(),
+  usePodcastWithSummary: vi.fn(),
 }));
 
 vi.mock('../../components/PodcastSidebar', () => ({
@@ -33,6 +34,7 @@ vi.mock('../../components/EpisodeList', () => ({
 }));
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
+const mockUsePodcastWithSummary = usePodcastWithSummary as ReturnType<typeof vi.fn>;
 
 const renderPage = (podcastId = 'podcast123') => {
   window.history.pushState({}, '', `/podcast/${podcastId}`);
@@ -48,6 +50,7 @@ const renderPage = (podcastId = 'podcast123') => {
 describe('PodcastDetailPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockUsePodcastWithSummary.mockImplementation((podcastDetail) => podcastDetail);
   });
 
   describe('Loading state', () => {

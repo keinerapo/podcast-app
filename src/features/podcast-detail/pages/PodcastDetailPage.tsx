@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { ErrorMessage } from '@shared/components/ErrorMessage';
 
-import { usePodcastDetail } from '../hooks';
+import { usePodcastDetail, usePodcastWithSummary } from '../hooks';
 import { PodcastSidebar } from '../components/PodcastSidebar';
 import { EpisodeList } from '../components/EpisodeList';
 import styles from './PodcastDetailPage.module.css';
@@ -9,6 +9,7 @@ import styles from './PodcastDetailPage.module.css';
 export function PodcastDetailPage() {
   const { podcastId } = useParams<{ podcastId: string }>();
   const { podcastDetail, error, isLoading } = usePodcastDetail(podcastId || '');
+  const podcastWithSummary = usePodcastWithSummary(podcastDetail);
 
   if (!podcastId) {
     return (
@@ -26,15 +27,15 @@ export function PodcastDetailPage() {
     );
   }
 
-  if (isLoading || !podcastDetail) {
+  if (isLoading || !podcastWithSummary) {
     return null;
   }
 
   return (
     <div className="container">
       <div className={styles.layout}>
-        <PodcastSidebar podcast={podcastDetail} />
-        <EpisodeList episodes={podcastDetail.episodes} podcastId={podcastId} />
+        <PodcastSidebar podcast={podcastWithSummary} />
+        <EpisodeList episodes={podcastWithSummary.episodes} podcastId={podcastId} />
       </div>
     </div>
   );
