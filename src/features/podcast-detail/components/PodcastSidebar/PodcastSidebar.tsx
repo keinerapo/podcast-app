@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { PodcastDetail } from '@shared/types/podcast.types';
 
 import styles from './PodcastSidebar.module.css';
@@ -7,16 +8,30 @@ interface PodcastSidebarProps {
 }
 
 export function PodcastSidebar({ podcast }: PodcastSidebarProps) {
+  const podcastUrl = `/podcast/${podcast.id}`;
+
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.imageWrapper}>
-        <img src={podcast.image} alt={podcast.name} className={styles.image} loading="lazy" />
-      </div>
+      <Link
+        to={podcastUrl}
+        className={styles.imageLink}
+        aria-label={`View ${podcast.name} podcast details`}
+      >
+        <div className={styles.imageWrapper}>
+          <img src={podcast.image} alt={podcast.name} className={styles.image} loading="lazy" />
+        </div>
+      </Link>
 
-      <div className={styles.info}>
-        <h2 className={styles.title}>{podcast.name}</h2>
-        <p className={styles.author}>by {podcast.author}</p>
-      </div>
+      <Link
+        to={podcastUrl}
+        className={styles.infoLink}
+        aria-label={`View ${podcast.name} podcast details`}
+      >
+        <div className={styles.info}>
+          <h2 className={styles.title}>{podcast.name}</h2>
+          <p className={styles.author}>by {podcast.author}</p>
+        </div>
+      </Link>
 
       {podcast.summary && (
         <div className={styles.descriptionSection}>
