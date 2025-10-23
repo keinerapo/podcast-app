@@ -72,6 +72,30 @@
   line-height: var(--line-height-relaxed);
 }
 
+.imageLink,
+.infoLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.imageLink:hover,
+.imageLink:focus {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+.infoLink:hover,
+.infoLink:focus {
+  opacity: 0.8;
+}
+
+.infoLink:hover .title,
+.infoLink:focus .title {
+  color: var(--color-accent);
+}
+
 @media (max-width: 768px) {
   .sidebar { position: static; margin-bottom: 16px; }
   .title { font-size: .95rem; }
