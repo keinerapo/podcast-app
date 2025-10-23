@@ -9,7 +9,7 @@ interface PodcastCardProps {
 
 export const PodcastCard = ({ podcast }: PodcastCardProps) => {
   return (
-    <Link to={`/podcast/${podcast.id}`} className={styles.card}>
+    <Link to={`/podcast/${podcast.id}`} state={{ podcast }} className={styles.card}>
       <article className={styles.content}>
         <div className={styles.imageWrapper}>
           <img

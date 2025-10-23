@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { ErrorMessage } from '@shared/components/ErrorMessage';
 import { PodcastSidebar } from '@features/podcast-detail/components/PodcastSidebar';
-import { usePodcastDetail } from '@features/podcast-detail/hooks';
+import { usePodcastDetail, usePodcastWithSummary } from '@features/podcast-detail/hooks';
 
 import { EpisodeDetails, AudioPlayer } from '../components';
 import { useEpisode } from '../hooks';
@@ -10,7 +10,8 @@ import styles from './EpisodePlayerPage.module.css';
 export function EpisodePlayerPage() {
   const { podcastId, episodeId } = useParams<{ podcastId: string; episodeId: string }>();
   const { podcastDetail, error } = usePodcastDetail(podcastId || '');
-  const { episode, notFound } = useEpisode(podcastDetail, episodeId);
+  const podcastWithSummary = usePodcastWithSummary(podcastDetail);
+  const { episode, notFound } = useEpisode(podcastWithSummary, episodeId);
 
   if (!podcastId || !episodeId) {
     return (
@@ -28,7 +29,7 @@ export function EpisodePlayerPage() {
     );
   }
 
-  if (!podcastDetail) {
+  if (!podcastWithSummary) {
     return null;
   }
 
@@ -48,7 +49,7 @@ export function EpisodePlayerPage() {
     <div className="container">
       <div className={styles.layout}>
         <aside className={styles.sidebar}>
-          <PodcastSidebar podcast={podcastDetail} />
+          <PodcastSidebar podcast={podcastWithSummary} />
         </aside>
         <main className={styles.main}>
           <section className={styles.panel}>

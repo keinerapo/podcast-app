@@ -2,13 +2,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
-import { usePodcastDetail } from '@features/podcast-detail/hooks';
+import { usePodcastDetail, usePodcastWithSummary } from '@features/podcast-detail/hooks';
 import { mockPodcastDetail, mockEpisodes } from '@test/fixtures';
 
 import { EpisodePlayerPage } from '../EpisodePlayerPage';
 
 vi.mock('@features/podcast-detail/hooks', () => ({
   usePodcastDetail: vi.fn(),
+  usePodcastWithSummary: vi.fn(),
 }));
 
 vi.mock('@features/podcast-detail/components/PodcastSidebar', () => ({
@@ -34,6 +35,7 @@ vi.mock('../../components', () => ({
 }));
 
 const mockUsePodcastDetail = usePodcastDetail as ReturnType<typeof vi.fn>;
+const mockUsePodcastWithSummary = usePodcastWithSummary as ReturnType<typeof vi.fn>;
 
 const renderPage = (podcastId = 'podcast123', episodeId = 'ep1') => {
   window.history.pushState({}, '', `/podcast/${podcastId}/episode/${episodeId}`);
@@ -49,6 +51,8 @@ const renderPage = (podcastId = 'podcast123', episodeId = 'ep1') => {
 describe('EpisodePlayerPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default mock: usePodcastWithSummary returns the same as podcastDetail
+    mockUsePodcastWithSummary.mockImplementation((podcastDetail) => podcastDetail);
   });
 
   describe('Error state', () => {
