@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 import { renderWithRouter } from '@test/utils';
 
 import { PodcastCard } from '../PodcastCard';

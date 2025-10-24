@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import * as apiService from '@shared/services/api';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 import { mockPodcasts } from '@test/fixtures';
 
 import { usePodcasts } from '../usePodcasts';

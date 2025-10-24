@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLoading } from '@app/providers';
 import { getTopPodcasts } from '@shared/services/api';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 
 interface UsePodcastsReturn {
   podcasts: Podcast[];

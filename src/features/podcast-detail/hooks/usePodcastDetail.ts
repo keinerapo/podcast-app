@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getPodcastDetail } from '@shared/services/api';
 import { useLoading } from '@app/providers';
-import type { PodcastDetail } from '@shared/types/podcast.types';
+import type { PodcastDetail } from '@entities/podcast';
 
 export function usePodcastDetail(podcastId: string) {
   const [podcastDetail, setPodcastDetail] = useState<PodcastDetail | null>(null);

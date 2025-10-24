@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { PodcastDetail } from '@shared/types/podcast.types';
+import type { PodcastDetail } from '@entities/podcast';
 
 import styles from './PodcastSidebar.module.css';
 

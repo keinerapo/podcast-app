@@ -1,4 +1,5 @@
-import type { Podcast, PodcastDetail, Episode } from '@shared/types/podcast.types';
+import type { Podcast, PodcastDetail } from '@entities/podcast';
+import type { Episode } from '@entities/episode';
 
 export const mockEpisodes: Episode[] = [
   {

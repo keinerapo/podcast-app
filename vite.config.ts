@@ -76,6 +76,7 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': '/src',
         '@app': '/src/app',
+        '@entities': '/src/entities',
         '@features': '/src/features',
         '@shared': '/src/shared',
         '@styles': '/src/styles',

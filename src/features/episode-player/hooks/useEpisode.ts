@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import type { Episode, PodcastDetail } from '@shared/types/podcast.types';
+import type { PodcastDetail } from '@entities/podcast';
+import type { Episode } from '@entities/episode';
 
 interface UseEpisodeReturn {
   episode: Episode | undefined;

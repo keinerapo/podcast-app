@@ -1,4 +1,4 @@
-import type { Episode } from '@shared/types/podcast.types';
+import type { Episode } from '@entities/episode';
 
 import { EpisodeListItem } from '../EpisodeListItem';
 import styles from './EpisodeList.module.css';
