@@ -1,5 +1,5 @@
 import { PodcastCard } from '@features/podcasts/components/PodcastCard';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 
 import styles from './PodcastList.module.css';
 

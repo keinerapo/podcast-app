@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { CACHE_CONFIG } from '@shared/constants/api.constants';
 import { cacheService } from '@shared/services/cache';
-import type { Podcast, PodcastDetail } from '@shared/types/podcast.types';
+import type { Podcast, PodcastDetail } from '@entities/podcast';
 
 /**
  * Hydrates podcast detail with summary from multiple sources

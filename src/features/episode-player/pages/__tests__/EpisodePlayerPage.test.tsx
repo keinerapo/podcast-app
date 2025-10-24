@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import type { PodcastDetail, Episode } from '@shared/types/podcast.types';
+import type { PodcastDetail } from '@entities/podcast';
+import type { Episode } from '@entities/episode';
 import { usePodcastDetail, usePodcastWithSummary } from '@features/podcast-detail/hooks';
 import { mockPodcastDetail, mockEpisodes } from '@test/fixtures';
 
@@ -51,7 +52,6 @@ const renderPage = (podcastId = 'podcast123', episodeId = 'ep1') => {
 describe('EpisodePlayerPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // Default mock: usePodcastWithSummary returns the same as podcastDetail
     mockUsePodcastWithSummary.mockImplementation((podcastDetail) => podcastDetail);
   });
 

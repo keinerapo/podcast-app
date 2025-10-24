@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 import { usePodcasts } from '@features/podcasts/hooks';
 import { renderWithRouter, mockPodcasts } from '@test/utils';
 

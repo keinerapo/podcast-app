@@ -2,12 +2,12 @@ import { CACHE_CONFIG, ITUNES_API } from '@shared/constants/api.constants';
 import { cacheService } from '@shared/services/cache';
 import { fetchThroughProxy } from '@shared/services/api/allOrigins.proxy';
 import type {
-  Episode,
   ITunesPodcastLookupResponse,
   ITunesTopPodcastsResponse,
   Podcast,
   PodcastDetail,
-} from '@shared/types/podcast.types';
+} from '@entities/podcast';
+import type { Episode } from '@entities/episode';
 
 /**
  * Generic function to fetch data with Cache-Aside pattern

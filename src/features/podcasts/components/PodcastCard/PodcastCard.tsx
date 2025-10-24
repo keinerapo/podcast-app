@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { Podcast } from '@shared/types/podcast.types';
+import type { Podcast } from '@entities/podcast';
 
 import styles from './PodcastCard.module.css';
 
